@@ -1,69 +1,46 @@
-# Prerequisites
-*.d
+# ==============================================
+#  TextLayoutEngine - 滇池拂晓版
+#  工业级 Rust + WASM 排版引擎 .gitignore
+# ==============================================
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Linker files
-*.ilk
-
-# Debugger Files
-*.pdb
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-*.so.*
-
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# Build directories
+# WASM 构建产物（自动生成，绝不提交）
+pkg/
+target/
+dist/
 build/
-Build/
-build-*/
+output/
+wasm/
 
-# CMake generated files
-CMakeFiles/
-CMakeCache.txt
-cmake_install.cmake
-Makefile
-install_manifest.txt
-compile_commands.json
+# npm 依赖与锁文件（环境无关）
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
 
-# Temporary files
-*.tmp
-*.log
-*.bak
+# 编辑器配置与缓存
+.idea/
+.vscode/
 *.swp
+*.swo
+.DS_Store
 
-# vcpkg
-vcpkg_installed/
+# 日志、临时文件、测试缓存
+*.log
+tmp/
+temp/
+*.tmp
 
-# debug information files
-*.dwo
+# 环境密钥、本地配置（绝对不能泄露）
+.env
+.env.local
+.env.*.local
 
-# test output & cache
-Testing/
+# 演示站静态资源缓存
 .cache/
+.parcel-cache/
+.next/
+.vercel
+
+# 性能测试临时数据
+benchmark-*.json
+profile/
