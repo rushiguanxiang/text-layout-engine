@@ -1,0 +1,54 @@
+[package]
+name = "text-layout-engine"
+version = "1.0.0"
+edition = "2021"
+authors = ["TextLayoutEngine Contributors"]
+description = "工业级中文排版引擎 — 诞生于滇池的晨风之中"
+license = "MIT"
+repository = "https://github.com/text-layout-engine/core"
+documentation = "https://docs.rs/text-layout-engine"
+readme = "../README.md"
+keywords = ["cjk", "typesetting", "layout", "unicode", "webgpu"]
+categories = ["text-processing", "graphics", "wasm"]
+
+# ============================================================
+# 运行时依赖（dependencies）
+# 这些依赖会被编译进最终的 WASM 或原生二进制中
+# ============================================================
+[dependencies]
+# wasm-bindgen：打通 WASM 与 JavaScript 的桥梁
+# 当编译目标为 wasm32 时启用，原生编译时可选
+wasm-bindgen = { version = "0.2", optional = true }
+
+# web-sys：提供 Web API 的 Rust 绑定（用于 WASM 环境）
+# 在 WASM 测试中需要 performance.now() 等 API
+web-sys = { version = "0.3", optional = true, features = ["Performance", "Window"] }
+
+# console_error_panic_hook：WASM 环境下提供更好的 panic 信息
+# 这在调试时非常有用，可以将 Rust 的 panic 信息输出到浏览器控制台
+console_error_panic_hook = { version = "0.1", optional = true }
+
+# instant：提供跨平台的计时功能
+# 在 WASM 环境下使用 performance.now()，在原生环境下使用 std::time
+instant = { version = "0.1", features = ["wasm-bindgen"] }
+
+# ============================================================
+# 开发依赖（dev-dependencies）
+# 仅在运行测试、基准测试或示例时使用
+# 根据 Cargo 规范，[dev-dependencies] 与 [dependencies] 格式相同
+# 但不会被包含在最终构建中
+# ============================================================
+[dev-dependencies]
+wasm-bindgen-test = "0.3"
+web-sys = { version = "0.3", features = ["Performance", "Window", "Console"] }
+quickcheck = "1.0"
+# wasm-bindgen-test：在 WASM 环境中运行测试
+wasm-bindgen-test = "0.3"
+
+# quickcheck：属性基测试（Property-based testing）框架
+# 用于测试禁则规则和换行逻辑的随机输入场景
+quickcheck = "1.0"
+
+# ============================================================
+# 构建依赖（build-dependencies）
+# 仅在 build.rs 构建脚本

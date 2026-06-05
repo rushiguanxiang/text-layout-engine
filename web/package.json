@@ -1,0 +1,27 @@
+{
+  "name": "text-layout-engine-demo",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "TextLayoutEngine V1.0「滇池拂晓版」— 工业级中文排版引擎演示站",
+  "author": "TextLayoutEngine Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/text-layout-engine/core"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src/ --ext .js,.html"
+  },
+  "dependencies": {
+    "vite-plugin-wasm": "^3.3.0",
+    "vite-plugin-top-level-await": "^1.4.1"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0",
+    "eslint": "^8.57.0"
+  }
+}

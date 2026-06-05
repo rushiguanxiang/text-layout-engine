@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TextLayoutEngine V1.0「滇池拂晓版」- 工业级中文排版引擎</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📜%3C/text%3E%3C/svg%3E">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #1a1a2e;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+        }
+        #app {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 16px;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        header h1 {
+            font-size: 18px;
+            font-weight: 400;
+            color: #a8d8ea;
+        }
+        header .subtitle {
+            font-size: 12px;
+            color: #888;
+        }
+        .main-content {
+            display: flex;
+            flex: 1;
+            gap: 16px;
+            min-height: 0;
+        }
+        #canvas-container {
+            flex: 1;
+            background: #0f0f1a;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        #canvas-container canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .controls-panel {
+            width: 280px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            overflow-y: auto;
+        }
+        .controls-panel h2 {
+            font-size: 14px;
+            font-weight: 500;
+            color: #a8d8ea;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 8px;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .control-group label {
+            font-size: 12px;
+            color: #aaa;
+        }
+        .control-group input[type="range"] {
+            width: 100%;
+            accent-color: #4fc3f7;
+        }
+        .control-group .value-display {
+            font-size: 12px;
+            color: #4fc3f7;
+            text-align: right;
+        }
+        .toggle-btn {
+            padding: 8px 16px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 6px;
+            background: transparent;
+            color: #e0e0e0;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        .toggle-btn.active {
+            background: rgba(79, 195, 247, 0.2);
+            border-color: #4fc3f7;
+            color: #4fc3f7;
+        }
+        .toggle-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        #stats {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(0,0,0,0.7);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: 'Consolas', monospace;
+            color: #4fc3f7;
+            pointer-events: none;
+            line-height: 1.6;
+        }
+        .scene-selector {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .scene-btn {
+            padding: 6px 12px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 4px;
+            background: transparent;
+            color: #bbb;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        .scene-btn.active {
+            background: rgba(79, 195, 247, 0.15);
+            border-color: #4fc3f7;
+            color: #4fc3f7;
+        }
+        @media (max-width: 768px) {
+            .main-content { flex-direction: column; }
+            .controls-panel { width: 100%; max-height: 200px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <header>
+            <div>
+                <h1>TextLayoutEngine · 滇池拂晓</h1>
+                <div class="subtitle">V1.0「Dianchi Dawn」— 工业级中文排版引擎</div>
+            </div>
+            <div style="font-size:12px;color:#666;" id="status">加载 WASM 模块中...</div>
+        </header>
+        <div class="main-content

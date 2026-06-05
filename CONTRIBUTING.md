@@ -1,55 +1,78 @@
-面向同道的江湖规矩 
+# 贡献指南
 
-道友，开源是一场修行，没有规矩不成方圆。这份文件将确保每一位来到我们仓库的开发者，都能遵循我们的“排版法度”。
+感谢您考虑为 TextLayoutEngine 贡献代码！请花几分钟阅读以下指南。
 
-贡献指南 (Contributing to TextLayoutEngine)
+## 行为准则
 
-道友，欢迎来到 TextLayoutEngine 的铸剑坊！
+本项目采用 [Contributor Covenant](https://www.contributor-covenant.org/) 行为准则。请尊重所有参与者。
 
-我们致力于构建世界上最快、最优雅的 Web 中文排版引擎。无论你是想修复一个标点悬挂的 Bug，还是想增加对阿拉伯文（RTL）的支持，我们都张开双臂欢迎。
+## 如何贡献
 
-但在你敲下第一行代码之前，请花几分钟阅读这份指南。
+### 报告 Bug
+1. 使用 Bug 报告模板创建 Issue
+2. 清晰描述问题，包括复现步骤和环境信息
+3. 如果可能，附上截图或错误日志
 
-️ 开发环境准备
+### 提交新功能
+1. 先创建 Feature Request Issue，讨论功能设计
+2. 等待维护者反馈后再开始编码
+3. 提交 PR 时请关联对应的 Issue
 
-Rust & WASM 工具链
-   bash
-   rustup update
-   cargo install wasm-pack
-   Node.js 环境 (推荐 v18+)
-克隆仓库并安装依赖
-   bash
-   git clone git@github.com:<你的用户名>/text-layout-engine.git
-   cd text-layout-engine/core
-   wasm-pack build --dev
-   
-提交代码前的“铁律”
+### 提交 Pull Request
 
-TextLayoutEngine 是一个工业级排版引擎，我们对性能和稳定性的要求近乎苛刻。
+1. **Fork 本仓库**，从 `main` 分支创建新分支
+   ```bash
+   git checkout -b feature/your-feature-name
+代码规范
 
-零堆分配原则：在 core/src 下的核心排版逻辑中，严禁使用 Vec::new() 或 String::new() 进行动态内存分配。所有输出必须通过预分配的切片（Slices）传入。
-SoA 布局：新增的数据结构必须遵循 Structure of Arrays 布局，以保证 CPU 缓存友好。
-测试覆盖：任何新增的排版规则（如新的禁则处理），必须附带至少 3 个单元测试（正常情况、边界情况、极端情况）。
+Rust 代码：遵循 rustfmt 和 clippy 的建议
+JavaScript 代码：遵循 ESLint 配置
+确保所有文件末尾有空行
+使用有意义的变量名和注释
+提交信息规范
+使用 Conventional Commits 格式：
 
-提交信息规范 (Commit Message)
-
-我们遵循 Conventional Commits 规范：
-
-feat: 新功能（如：新增对 Emoji 代理对的支持）
-fix: 修复 Bug（如：修复竖排时全角逗号未正确悬挂的问题）
-perf: 性能优化（如：优化 FontFallback 的位掩码查找逻辑）
+feat: 新功能
+fix: Bug 修复
 docs: 文档更新
-test: 添加或修改测试
+style: 代码样式调整
+refactor: 代码重构
+test: 测试相关
+chore: 构建/工具链相关
+运行测试
 
-提交流程
+# 在 core/ 目录下运行所有测试
+wasm-pack test --firefox --headless
+提交 PR
 
-Fork 本仓库，并创建你的特性分支 (git checkout -b feature/amazing-feature)
-提交你的修改 (git commit -m 'feat: add amazing feature')
-推送到分支 (git push origin feature/amazing-feature)
-打开一个 Pull Request，并在描述中详细说明你的改动动机和测试结果。
+使用 PR 模板填写信息
+确保 CI 检查全部通过
+等待代码审查
+开发环境搭建
+前置要求
+Rust 1.75+ (stable)
+wasm-pack 0.12+
+Node.js 20+
+Firefox 或 Chrome（用于 WASM 测试）
+本地开发
+# 克隆仓库
+git clone https://github.com/your-username/text-layout-engine.git
+cd text-layout-engine
 
-我们的承诺
+# 构建 WASM 核心
+cd core
+wasm-pack build --target web --release
 
-每一个 PR，无论大小，都会在 48 小时内得到核心维护者的 Review。我们尊重每一位贡献者的代码，就像尊重每一个汉字的笔画一样。
-
-期待在 PR 列表中看到你的名字！
+# 启动 Web 演示
+cd ../web
+npm install
+npm run dev
+项目结构
+text-layout-engine/
+├── core/          # Rust 核心引擎代码
+├── web/           # Web 演示站
+├── docs/          # 开发者文档
+├── tests/         # 测试套件
+└── scripts/       # 辅助脚本
+许可证
+通过提交 PR，您同意您的贡献将在 MIT 许可证下发布。
